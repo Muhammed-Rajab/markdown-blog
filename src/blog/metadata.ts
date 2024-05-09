@@ -104,7 +104,13 @@ export class Blog {
       editedAt: createdAt,
     };
 
-    const folderPath = path.join(this.blogsPath, slug);
+    const { exists, path: folderPath } = this.__checkIfBlogExists(slug);
+
+    if (exists) {
+      console.log("blog already exists");
+      return;
+    }
+
     try {
       fs.mkdirSync(folderPath);
       console.log("Folder created successfully", folderPath);
@@ -114,8 +120,8 @@ export class Blog {
     }
 
     const metaFilePath = path.join(folderPath, "metadata.json");
-    const markdownFilePath = path.join(folderPath, `${slug}.md`);
-    const htmlFilePath = path.join(folderPath, `${slug}.html`);
+    const markdownFilePath = path.join(folderPath, `markdown.md`);
+    const htmlFilePath = path.join(folderPath, `parsed.html`);
     try {
       fs.writeFileSync(metaFilePath, JSON.stringify(meta, null, 2));
       console.log("Created metadata file");
@@ -139,15 +145,82 @@ export class Blog {
     { title, desc, draft }: UpdateBlogOptions
   ) {
     // check if it exists
+    const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
+    if (!exists) {
+      console.log("blog doesn't exist");
+      return;
+    }
+
+    // get the blog meta
+    const meta = this.__getMeta(dirPath);
+
     // update meta
+
+    let isEdited = false;
+    let isTitleUpdated = false;
+
+    // check if title has changed, if yes, create new slug
+    if (title !== undefined && meta.title !== title) {
+      isEdited = true;
+      isTitleUpdated = true;
+      meta.title = title as string;
+      meta.slug = slugify(title as string, {
+        separator: "-",
+        lowercase: true,
+      });
+    }
+
+    // check if desc has changed
+    if (desc !== undefined && desc !== meta.desc) {
+      isEdited = true;
+      meta.desc = desc as string;
+    }
+
+    // check if draft has changed
+    if (draft !== undefined && draft !== meta.draft) {
+      isEdited = true;
+      meta.draft = draft as boolean;
+    }
+
+    if (isEdited) {
+      meta.editedAt = new Date();
+    }
+
+    // save the new meta to metadata.json
+    try {
+      this.__overWriteMeta(dirPath, meta);
+    } catch (err) {
+      console.log(`failed to overwrite updated metadata `, err);
+      return;
+    }
+
+    // rename the folder if title is changed
+    try {
+      fs.renameSync(dirPath, path.join(this.blogsPath, meta.slug));
+    } catch (err) {
+      console.log("failed to rename the folder to updated name", err);
+      return;
+    }
+
+    // ! ERROR HANDLING REQUIRED
+
     // update blog meta
+    const blogMeta = this.metaHandler.getBlogMeta();
+
+    blogMeta.blogs = blogMeta.blogs.map((blog: Metadata) => {
+      if (blog.id === meta.id) {
+        return meta;
+      }
+      return blog;
+    });
+
+    this.metaHandler.overWriteBlogMeta(blogMeta);
   }
 
   public deleteBlog(titleSlug: string) {
     // check if it exists
-    const dirPath = path.join(this.blogsPath, titleSlug);
-    const blogExists = fs.existsSync(dirPath);
-    if (!blogExists) {
+    const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
+    if (!exists) {
       console.log("blog doesn't exist");
       return;
     }
@@ -170,4 +243,38 @@ export class Blog {
   }
 
   public compileBlog(titleSlug: string) {}
+
+  // ! HELPER METHODS
+  private __checkIfBlogExists(titleSlug: string): {
+    exists: boolean;
+    path: string;
+  } {
+    const dirPath = path.join(this.blogsPath, titleSlug);
+    const blogExists = fs.existsSync(dirPath);
+    if (!blogExists) {
+      return { exists: false, path: "" };
+    }
+    return { exists: true, path: dirPath };
+  }
+
+  private __getMeta(dirPath: string): Metadata {
+    try {
+      const buf = fs.readFileSync(path.join(dirPath, "metadata.json"));
+      const parsedJSON = JSON.parse(buf.toString()) as Metadata;
+      return parsedJSON;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  private __overWriteMeta(dirPath: string, meta: Metadata) {
+    try {
+      fs.writeFileSync(
+        path.join(dirPath, "metadata.json"),
+        JSON.stringify(meta, null, 2)
+      );
+    } catch (err) {
+      throw err;
+    }
+  }
 }

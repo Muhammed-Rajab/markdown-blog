@@ -13,4 +13,4 @@ const meta = new Blog(BLOGS_PATH);
 //   draft: false,
 // });
 
-meta.updateBlog("react-where-we-wrong-about-it", {});
+meta.updateBlog("react-where-we-wrong-about-it", { title: "A cool blog" });
