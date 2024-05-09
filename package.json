@@ -19,8 +19,10 @@
   },
   "dependencies": {
     "@sindresorhus/slugify": "^2.2.1",
+    "@types/marked": "^6.0.0",
     "@types/sindresorhus__slugify": "^0.9.3",
     "@types/uuid": "^9.0.8",
+    "marked": "^12.0.2",
     "uuid": "^9.0.1"
   }
 }

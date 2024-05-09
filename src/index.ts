@@ -7,10 +7,11 @@ const BLOGS_PATH = path.join(__dirname, "../blogs");
 
 const meta = new Blog(BLOGS_PATH);
 
-// meta.createBlog({
-//   title: "React: Where we wrong about it?",
-//   desc: "This requires me to keep my ego aside and actually think it about the problem from a consumer perspective....",
-//   draft: false,
-// });
+if (!meta.__checkIfBlogExists("test-blog").exists)
+  meta.createBlog({
+    title: "test blog",
+    desc: "This requires me to keep my ego aside and actually think it about the problem from a consumer perspective....",
+    draft: false,
+  });
 
-meta.updateBlog("react-where-we-wrong-about-it", { title: "A cool blog" });
+meta.compileBlog("test-blog");

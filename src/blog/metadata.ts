@@ -1,8 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+import { marked } from "marked";
+import { v4 as uuidv4 } from "uuid";
 import slugify from "../../node_modules/@sindresorhus/slugify/index";
 import { BlogMeta, Metadata } from "./types";
-import { v4 as uuidv4 } from "uuid";
 
 // * Types for BlogMetaData
 type CreateBlogOptions = {
@@ -242,19 +243,43 @@ export class Blog {
     }
   }
 
-  public compileBlog(titleSlug: string) {}
+  public compileBlog(titleSlug: string) {
+    // check if exists
+    const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
+    if (!exists) {
+      console.log("blog doesn't exist");
+      return;
+    }
+    // get markdown content
+    let markDownContent: string;
+    try {
+      const buf = fs.readFileSync(path.join(dirPath, "markdown.md"));
+      markDownContent = buf.toString();
+    } catch (err) {
+      console.error(`failed to fetch markdown`, err);
+      return;
+    }
+
+    // parse the markdown to html
+    const html = marked.parse(markDownContent) as string;
+
+    // update parsed.html
+    try {
+      fs.writeFileSync(path.join(dirPath, "parsed.html"), html);
+    } catch (err) {
+      console.error("failed to write parsed markdown to html", err);
+      return;
+    }
+  }
 
   // ! HELPER METHODS
-  private __checkIfBlogExists(titleSlug: string): {
+  public __checkIfBlogExists(titleSlug: string): {
     exists: boolean;
     path: string;
   } {
     const dirPath = path.join(this.blogsPath, titleSlug);
     const blogExists = fs.existsSync(dirPath);
-    if (!blogExists) {
-      return { exists: false, path: "" };
-    }
-    return { exists: true, path: dirPath };
+    return { exists: blogExists, path: dirPath };
   }
 
   private __getMeta(dirPath: string): Metadata {
