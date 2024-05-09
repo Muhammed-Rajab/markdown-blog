@@ -5,19 +5,88 @@ import { BlogMeta, Metadata } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
 // * Types for BlogMetaData
-type CreateBlogConfig = {
+type CreateBlogOptions = {
   title: string;
   desc: string;
   draft: boolean;
 };
+type UpdateBlogOptions = {
+  title?: string;
+  desc?: string;
+  draft?: boolean;
+};
 
-export class BlogMetaData {
-  private METADATA_PATH: string;
-  constructor(private blogsPath: string) {
-    this.METADATA_PATH = path.join(blogsPath, "METADATA.json");
+export class BlogMetaHandler {
+  constructor(private METADATA_PATH: string) {}
+
+  public add(meta: Metadata) {
+    // Get existing metadata
+    let blogMeta: BlogMeta;
+    try {
+      blogMeta = this.getBlogMeta();
+    } catch (err) {
+      throw err;
+    }
+
+    // Add to the blogs
+    blogMeta.blogs.push(meta);
+
+    // Rewrite the existing metadata
+    try {
+      this.overWriteBlogMeta(blogMeta);
+    } catch (err) {
+      throw err;
+    }
   }
 
-  public createBlog({ title, desc, draft }: CreateBlogConfig) {
+  public remove(titleSlug: string) {
+    // Get all blogs
+    let blogMeta: BlogMeta;
+    try {
+      blogMeta = this.getBlogMeta();
+    } catch (err) {
+      throw err;
+    }
+
+    // Filter this one out
+    blogMeta.blogs = blogMeta.blogs.filter((blog) => blog.slug !== titleSlug);
+
+    // Overwrite the blog meta
+    try {
+      this.overWriteBlogMeta(blogMeta);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public getBlogMeta(): BlogMeta {
+    try {
+      const buf = fs.readFileSync(this.METADATA_PATH);
+      const parsedJson = JSON.parse(buf.toString()) as BlogMeta;
+      return parsedJson;
+    } catch (err) {
+      throw new Error(`failed to parse blog meta: ${err}`);
+    }
+  }
+
+  public overWriteBlogMeta(blogMeta: BlogMeta) {
+    try {
+      fs.writeFileSync(this.METADATA_PATH, JSON.stringify(blogMeta, null, 2));
+    } catch (err) {
+      throw new Error(`failed to overwrite blog meta: ${err}`);
+    }
+  }
+}
+
+export class Blog {
+  private METADATA_PATH: string;
+  private metaHandler: BlogMetaHandler;
+  constructor(private blogsPath: string) {
+    this.METADATA_PATH = path.join(blogsPath, "METADATA.json");
+    this.metaHandler = new BlogMetaHandler(this.METADATA_PATH);
+  }
+
+  public createBlog({ title, desc, draft }: CreateBlogOptions) {
     // Create metadata object
     const id = uuidv4();
     const createdAt = new Date();
@@ -62,33 +131,43 @@ export class BlogMetaData {
     }
 
     // Update the METADATA.json
-    let blogMetaContent: BlogMeta;
-    try {
-      const metaContent = fs.readFileSync(this.METADATA_PATH);
-      const parsedMetaContent = JSON.parse(metaContent.toString()) as BlogMeta;
-      blogMetaContent = parsedMetaContent;
-    } catch (err) {
-      console.error("failed to update METADATA.json", err);
+    this.metaHandler.add(meta);
+  }
+
+  public updateBlog(
+    titleSlug: string,
+    { title, desc, draft }: UpdateBlogOptions
+  ) {
+    // check if it exists
+    // update meta
+    // update blog meta
+  }
+
+  public deleteBlog(titleSlug: string) {
+    // check if it exists
+    const dirPath = path.join(this.blogsPath, titleSlug);
+    const blogExists = fs.existsSync(dirPath);
+    if (!blogExists) {
+      console.log("blog doesn't exist");
       return;
     }
 
-    // Update the content
-    blogMetaContent.blogs.push(meta);
-
-    // Write to file
+    // delete the stuff
     try {
-      fs.writeFileSync(
-        this.METADATA_PATH,
-        JSON.stringify(blogMetaContent, null, 2)
-      );
-      console.log("added meta to file");
+      fs.rmSync(dirPath, { recursive: true });
     } catch (err) {
-      console.error("failed to update files", err);
+      console.error("failed to delete file", err);
+      return;
+    }
+
+    // remove fom blog meta
+    try {
+      this.metaHandler.remove(titleSlug);
+    } catch (err) {
+      console.error(`failed to remove from blog meta`, err);
       return;
     }
   }
 
-  public updateBlog() {}
-  public deleteBlog() {}
-  public compileBlog() {}
+  public compileBlog(titleSlug: string) {}
 }
