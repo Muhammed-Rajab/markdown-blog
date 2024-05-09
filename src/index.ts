@@ -1,4 +1,4 @@
-import { Blog } from "./blog/metadata";
+import { Blog } from "./blog/blog";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
