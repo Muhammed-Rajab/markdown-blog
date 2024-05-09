@@ -5,7 +5,6 @@ export class BlogMetaHandler {
   constructor(private METADATA_PATH: string) {}
 
   public add(meta: Metadata) {
-    // Get existing metadata
     let blogMeta: BlogMeta;
     try {
       blogMeta = this.getBlogMeta();
@@ -13,10 +12,8 @@ export class BlogMetaHandler {
       throw err;
     }
 
-    // Add to the blogs
     blogMeta.blogs.push(meta);
 
-    // Rewrite the existing metadata
     try {
       this.overWriteBlogMeta(blogMeta);
     } catch (err) {
@@ -25,7 +22,6 @@ export class BlogMetaHandler {
   }
 
   public remove(titleSlug: string) {
-    // Get all blogs
     let blogMeta: BlogMeta;
     try {
       blogMeta = this.getBlogMeta();
@@ -33,10 +29,8 @@ export class BlogMetaHandler {
       throw err;
     }
 
-    // Filter this one out
     blogMeta.blogs = blogMeta.blogs.filter((blog) => blog.slug !== titleSlug);
 
-    // Overwrite the blog meta
     try {
       this.overWriteBlogMeta(blogMeta);
     } catch (err) {
