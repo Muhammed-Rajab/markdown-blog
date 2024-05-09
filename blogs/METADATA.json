@@ -1,0 +1,13 @@
+{
+  "blogs": [
+    {
+      "id": "a730d3aa-5f4f-4297-9fbd-df97633e67b4",
+      "title": "React: Where we wrong about it?",
+      "desc": "This requires me to keep my ego aside and actually think it about the problem from a consumer perspective....",
+      "draft": false,
+      "slug": "react-where-we-wrong-about-it",
+      "createdAt": "2024-05-09T16:08:16.517Z",
+      "editedAt": "2024-05-09T16:08:16.517Z"
+    }
+  ]
+}
