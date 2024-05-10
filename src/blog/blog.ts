@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+// @ts-ignore
 import { marked } from "marked";
 import { v4 as uuidv4 } from "uuid";
 import { BlogMetaHandler } from "./metadata";
@@ -10,8 +11,6 @@ import {
   UpdateBlogOptions,
 } from "./types";
 import slugify from "../../node_modules/@sindresorhus/slugify/index";
-
-// * Types for Blog
 
 export class Blog {
   private METADATA_PATH: string;
@@ -42,7 +41,7 @@ export class Blog {
     const { exists, path: folderPath } = this.__checkIfBlogExists(slug);
 
     if (exists) {
-      console.log("blog already exists");
+      console.error("blog already exists");
       return;
     }
 
