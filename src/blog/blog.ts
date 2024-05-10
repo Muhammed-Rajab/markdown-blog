@@ -23,7 +23,7 @@ export class Blog {
     this.metaHandler = new BlogMetaHandler(this.METADATA_PATH);
   }
 
-  public createBlog({ title, desc, draft }: CreateBlogOptions) {
+  public createBlog({ title, desc, draft, cover }: CreateBlogOptions) {
     const id = uuidv4();
     const createdAt = new Date();
     const slug = slugify(title, {
@@ -37,6 +37,7 @@ export class Blog {
       draft,
       slug,
       createdAt,
+      cover: cover !== undefined ? cover : "",
       editedAt: createdAt,
     };
 
@@ -100,7 +101,7 @@ export class Blog {
 
   public updateBlog(
     titleSlug: string,
-    { title, desc, draft }: UpdateBlogOptions
+    { title, desc, draft, cover }: UpdateBlogOptions
   ) {
     const { exists: blogExists, path: dirPath } =
       this.__checkIfBlogExists(titleSlug);
@@ -140,6 +141,11 @@ export class Blog {
     if (draft !== undefined && draft !== meta.draft) {
       isEdited = true;
       meta.draft = draft as boolean;
+    }
+
+    if (cover !== undefined && cover !== meta.cover) {
+      isEdited = true;
+      meta.cover = cover as string;
     }
 
     if (isEdited) {
