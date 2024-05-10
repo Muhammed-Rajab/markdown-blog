@@ -102,9 +102,18 @@ export class Blog {
     titleSlug: string,
     { title, desc, draft }: UpdateBlogOptions
   ) {
-    const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
-    if (!exists) {
-      Logger.warn("blog doesn't exist");
+    const { exists: blogExists, path: dirPath } =
+      this.__checkIfBlogExists(titleSlug);
+    const { exists: assetsExists, path: assetsPath } =
+      this.__checkIfAssetsExists(titleSlug);
+
+    if (blogExists) {
+      Logger.warn("blog already exists");
+      return;
+    }
+
+    if (assetsExists) {
+      Logger.warn("assets already exists");
       return;
     }
 
@@ -146,10 +155,13 @@ export class Blog {
     }
 
     let newDirPath = path.join(this.blogsPath, meta.slug);
+    let newAssetsPath = path.join(this.assetsPath, meta.slug);
     if (isTitleUpdated) {
       try {
         fs.renameSync(dirPath, newDirPath);
         Logger.success(`renamed blog folder to '${meta.slug}'`);
+        fs.renameSync(assetsPath, newAssetsPath);
+        Logger.success(`renamed assets folder to '${meta.slug}'`);
       } catch (err) {
         Logger.error("failed to rename folder", err);
         return;
@@ -185,10 +197,19 @@ export class Blog {
     this.__commitToSaveChangesMsg();
   }
 
-  public deleteBlog(titleSlug: string) {
-    const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
-    if (!exists) {
-      Logger.warn("blog doesn't exist");
+  public deleteBlog(titleSlug: string, removeAssets: boolean = false) {
+    const { exists: blogExists, path: dirPath } =
+      this.__checkIfBlogExists(titleSlug);
+    const { exists: assetsExists, path: assetsPath } =
+      this.__checkIfAssetsExists(titleSlug);
+
+    if (blogExists) {
+      Logger.warn("blog already exists");
+      return;
+    }
+
+    if (assetsExists) {
+      Logger.warn("assets already exists");
       return;
     }
 
@@ -196,8 +217,18 @@ export class Blog {
       fs.rmSync(dirPath, { recursive: true });
       Logger.success(`removed blog folder '${titleSlug}'`);
     } catch (err) {
-      Logger.error("failed to delete blog folder", err);
+      Logger.error("failed to remove blog folder", err);
       return;
+    }
+
+    if (removeAssets === true) {
+      try {
+        fs.rmSync(assetsPath, { recursive: true });
+        Logger.success(`removed assets folder '${titleSlug}'`);
+      } catch (err) {
+        Logger.error("failed to remove assets folder", err);
+        return;
+      }
     }
 
     try {
