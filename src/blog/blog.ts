@@ -191,7 +191,7 @@ export class Blog {
     this.__commitToSaveChangesMsg();
   }
 
-  public compileBlog(titleSlug: string) {
+  public parseBlog(titleSlug: string) {
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
       Logger.warn("blog doesn't exist");
