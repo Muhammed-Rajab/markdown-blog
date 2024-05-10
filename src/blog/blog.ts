@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 // @ts-ignore
 import { marked } from "marked";
+import { Logger } from "./logger";
 import { v4 as uuidv4 } from "uuid";
 import { BlogMetaHandler } from "./metadata";
 import {
@@ -38,37 +39,38 @@ export class Blog {
       editedAt: createdAt,
     };
 
-    const { exists, path: folderPath } = this.__checkIfBlogExists(slug);
+    const { exists, path: dirPath } = this.__checkIfBlogExists(slug);
 
     if (exists) {
-      console.error("blog already exists");
+      Logger.warn("blog already exists");
       return;
     }
 
     try {
-      fs.mkdirSync(folderPath);
-      console.log("Folder created successfully", folderPath);
+      fs.mkdirSync(dirPath);
+      Logger.success(`folder created '${slug}'`);
     } catch (err) {
-      console.error("failed to create the folder", err);
+      Logger.error(`failed to create folder '${slug}'`, err);
       return;
     }
 
-    const metaFilePath = path.join(folderPath, "metadata.json");
-    const markdownFilePath = path.join(folderPath, `markdown.md`);
-    const htmlFilePath = path.join(folderPath, `parsed.html`);
+    const metaFilePath = path.join(dirPath, "metadata.json");
+    const markdownFilePath = path.join(dirPath, `markdown.md`);
+    const htmlFilePath = path.join(dirPath, `parsed.html`);
     try {
       fs.writeFileSync(metaFilePath, JSON.stringify(meta, null, 2));
-      console.log("Created metadata file");
+      Logger.success("metadata.json created");
       fs.writeFileSync(markdownFilePath, "# Hello World");
-      console.log("Created markdown file");
+      Logger.success("markdown.md created");
       fs.writeFileSync(htmlFilePath, "<h1>Hello World</h1>");
-      console.log("Created html file");
+      Logger.success("parsed.html created");
     } catch (err) {
-      console.error("failed to create files", err);
+      Logger.error("failed to create file", err);
       return;
     }
 
     this.metaHandler.add(meta);
+    Logger.success(`blog created successfully at ${dirPath}`);
   }
 
   public updateBlog(
