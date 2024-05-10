@@ -9,7 +9,7 @@ const program = new Command();
 const blog = new Blog(BLOGS_PATH, ASSETS_PATH);
 
 program
-  .version("1.0.0")
+  .version("69.69.69")
   .description("Manage blogs, without much effort.")
   .option("-c, --create", "to create a new blog")
   .option("-u, --update", "to update an existing blog")
