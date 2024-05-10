@@ -2,17 +2,17 @@ import fs from "node:fs";
 import path from "node:path";
 // @ts-ignore
 import { marked } from "marked";
-import { Logger } from "./logger";
+import { Logger } from "./logger.js";
 import { v4 as uuidv4 } from "uuid";
-import { BlogMetaHandler } from "./metadata";
+import { BlogMetaHandler } from "./metadata.js";
 import {
   BlogMeta,
   Metadata,
   CreateBlogOptions,
   UpdateBlogOptions,
-} from "./types";
-import slugify from "../../node_modules/@sindresorhus/slugify/index";
-import chalk from "../../node_modules/chalk/source/index";
+} from "./types.js";
+import slugify from "../../node_modules/@sindresorhus/slugify/index.js";
+import chalk from "../../node_modules/chalk/source/index.js";
 
 export class Blog {
   private METADATA_PATH: string;

@@ -1,4 +1,4 @@
-import chalk from "../../node_modules/chalk/source/index";
+import chalk from "../../node_modules/chalk/source/index.js";
 
 export class Logger {
   static success(...msg: Array<unknown>) {

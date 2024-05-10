@@ -1,4 +1,5 @@
-import { Blog } from "./blog/blog";
+#! /usr/bin/env node
+import { Blog } from "./blog/blog.js";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -7,9 +8,9 @@ const BLOGS_PATH = path.join(__dirname, "../blogs");
 
 const meta = new Blog(BLOGS_PATH);
 
-if (!meta.__checkIfBlogExists("test-blog").exists)
-  meta.createBlog({
-    title: "test blog",
-    desc: "This requires me to keep my ego aside and actually think it about the problem from a consumer perspective....",
-    draft: false,
-  });
+// if (!meta.__checkIfBlogExists("test-blog").exists)
+//   meta.createBlog({
+//     title: "test blog",
+//     desc: "This requires me to keep my ego aside and actually think it about the problem from a consumer perspective....",
+//     draft: false,
+//   });

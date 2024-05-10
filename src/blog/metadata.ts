@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { BlogMeta, Metadata } from "./types";
+import { BlogMeta, Metadata } from "./types.js";
 
 export class BlogMetaHandler {
   constructor(private METADATA_PATH: string) {}
