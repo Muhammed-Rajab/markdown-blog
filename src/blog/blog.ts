@@ -154,18 +154,16 @@ export class Blog {
   }
 
   public deleteBlog(titleSlug: string) {
-    // check if it exists
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.log("blog doesn't exist");
+      console.error("blog doesn't exist");
       return;
     }
 
-    // delete the stuff
     try {
       fs.rmSync(dirPath, { recursive: true });
     } catch (err) {
-      console.error("failed to delete file", err);
+      console.error("failed to delete blog", err);
       return;
     }
 
