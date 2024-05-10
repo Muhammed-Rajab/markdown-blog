@@ -81,4 +81,13 @@ if (opts.create) {
   }
 
   blog.deleteBlog(slug);
+} else if (opts.parse) {
+  const slug = opts.slug;
+
+  if (slug === undefined) {
+    console.log("-s, --slug is required");
+    process.exit(1);
+  }
+
+  blog.parseBlog(slug);
 }
