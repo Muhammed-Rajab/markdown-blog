@@ -12,6 +12,7 @@ import {
   UpdateBlogOptions,
 } from "./types";
 import slugify from "../../node_modules/@sindresorhus/slugify/index";
+import chalk from "../../node_modules/chalk/source/index";
 
 export class Blog {
   private METADATA_PATH: string;
@@ -79,7 +80,7 @@ export class Blog {
   ) {
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      Logger.error("blog doesn't exist");
+      Logger.warn("blog doesn't exist");
       return;
     }
 
@@ -161,29 +162,33 @@ export class Blog {
   public deleteBlog(titleSlug: string) {
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.error("blog doesn't exist");
+      Logger.warn("blog doesn't exist");
       return;
     }
 
     try {
       fs.rmSync(dirPath, { recursive: true });
+      Logger.success(`removed blog folder '${titleSlug}'`);
     } catch (err) {
-      console.error("failed to delete blog", err);
+      Logger.error("failed to delete blog folder", err);
       return;
     }
 
     try {
       this.metaHandler.remove(titleSlug);
+      Logger.success("overwrite METADATA.json");
     } catch (err) {
-      console.error(`failed to remove from blog meta`, err);
+      Logger.error(`failed to remove from blog meta`, err);
       return;
     }
+
+    Logger.success(`deleted blog '${titleSlug}'`);
   }
 
   public compileBlog(titleSlug: string) {
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.error("blog doesn't exist");
+      Logger.warn("blog doesn't exist");
       return;
     }
 
@@ -192,7 +197,7 @@ export class Blog {
       const buf = fs.readFileSync(path.join(dirPath, "markdown.md"));
       markDownContent = buf.toString();
     } catch (err) {
-      console.error("failed to fetch markdown", err);
+      Logger.error("failed to fetch markdown", err);
       return;
     }
 
@@ -204,6 +209,13 @@ export class Blog {
       console.error("failed to write html code", err);
       return;
     }
+
+    Logger.success(
+      `compiled markdown.md to parsed.html at ${path.join(
+        dirPath,
+        "parsed.html"
+      )}`
+    );
   }
 
   // ! HELPER METHODS
@@ -235,5 +247,12 @@ export class Blog {
     } catch (err) {
       throw err;
     }
+  }
+
+  public __commitToSaveChangesMsg() {
+    console.log("\n");
+    console.log(chalk.bgGreenBright.white.bold("to commit changes, run: "));
+    console.log(chalk.italic("  git add ."));
+    console.log(chalk.italic("  git commit"));
   }
 }
