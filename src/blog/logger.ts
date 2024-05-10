@@ -14,6 +14,6 @@ export class Logger {
   }
 
   static info(...msg: Array<unknown>) {
-    console.log(chalk.blueBright("ℹ️ Info:", ...msg));
+    console.log(chalk.cyanBright("📝 Info:", ...msg));
   }
 }

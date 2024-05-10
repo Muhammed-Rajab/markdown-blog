@@ -16,3 +16,8 @@ const meta = new Blog(BLOGS_PATH);
 //   });
 
 // meta.compileBlog("test-blog");
+
+Logger.success("Created a new blog");
+Logger.error("JSON parsing resulted in error");
+Logger.warn("Blog already exists");
+Logger.info("The analytics is doing great!");
