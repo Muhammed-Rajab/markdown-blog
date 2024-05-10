@@ -3,31 +3,26 @@ import path from "node:path";
 import { marked } from "marked";
 import { v4 as uuidv4 } from "uuid";
 import { BlogMetaHandler } from "./metadata";
-import { BlogMeta, Metadata } from "./types";
+import {
+  BlogMeta,
+  Metadata,
+  CreateBlogOptions,
+  UpdateBlogOptions,
+} from "./types";
 import slugify from "../../node_modules/@sindresorhus/slugify/index";
 
 // * Types for Blog
-type CreateBlogOptions = {
-  title: string;
-  desc: string;
-  draft: boolean;
-};
-type UpdateBlogOptions = {
-  title?: string;
-  desc?: string;
-  draft?: boolean;
-};
 
 export class Blog {
   private METADATA_PATH: string;
   private metaHandler: BlogMetaHandler;
+
   constructor(private blogsPath: string) {
     this.METADATA_PATH = path.join(blogsPath, "METADATA.json");
     this.metaHandler = new BlogMetaHandler(this.METADATA_PATH);
   }
 
   public createBlog({ title, desc, draft }: CreateBlogOptions) {
-    // Create metadata object
     const id = uuidv4();
     const createdAt = new Date();
     const slug = slugify(title, {
@@ -67,16 +62,13 @@ export class Blog {
       console.log("Created metadata file");
       fs.writeFileSync(markdownFilePath, "# Hello World");
       console.log("Created markdown file");
-
-      // ! DO THE RENDERING LATER
-      fs.writeFileSync(htmlFilePath, "");
+      fs.writeFileSync(htmlFilePath, "<h1>Hello World</h1>");
       console.log("Created html file");
     } catch (err) {
       console.error("failed to create files", err);
       return;
     }
 
-    // Update the METADATA.json
     this.metaHandler.add(meta);
   }
 
@@ -84,22 +76,17 @@ export class Blog {
     titleSlug: string,
     { title, desc, draft }: UpdateBlogOptions
   ) {
-    // check if it exists
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.log("blog doesn't exist");
+      console.error("blog doesn't exist");
       return;
     }
 
-    // get the blog meta
     const meta = this.__getMeta(dirPath);
-
-    // update meta
 
     let isEdited = false;
     let isTitleUpdated = false;
 
-    // check if title has changed, if yes, create new slug
     if (title !== undefined && meta.title !== title) {
       isEdited = true;
       isTitleUpdated = true;
@@ -110,13 +97,11 @@ export class Blog {
       });
     }
 
-    // check if desc has changed
     if (desc !== undefined && desc !== meta.desc) {
       isEdited = true;
       meta.desc = desc as string;
     }
 
-    // check if draft has changed
     if (draft !== undefined && draft !== meta.draft) {
       isEdited = true;
       meta.draft = draft as boolean;
@@ -126,26 +111,30 @@ export class Blog {
       meta.editedAt = new Date();
     }
 
-    // save the new meta to metadata.json
     try {
       this.__overWriteMeta(dirPath, meta);
     } catch (err) {
-      console.log(`failed to overwrite updated metadata `, err);
+      console.error(`failed to overwrite updated metadata `, err);
       return;
     }
 
-    // rename the folder if title is changed
-    try {
-      fs.renameSync(dirPath, path.join(this.blogsPath, meta.slug));
-    } catch (err) {
-      console.log("failed to rename the folder to updated name", err);
-      return;
+    if (isTitleUpdated) {
+      try {
+        fs.renameSync(dirPath, path.join(this.blogsPath, meta.slug));
+      } catch (err) {
+        console.error("failed to rename the folder to updated name", err);
+        return;
+      }
     }
-
-    // ! ERROR HANDLING REQUIRED
 
     // update blog meta
-    const blogMeta = this.metaHandler.getBlogMeta();
+    let blogMeta: BlogMeta;
+    try {
+      blogMeta = this.metaHandler.getBlogMeta();
+    } catch (err) {
+      console.error(`failed to parse blog meta: ${err}`);
+      return;
+    }
 
     blogMeta.blogs = blogMeta.blogs.map((blog: Metadata) => {
       if (blog.id === meta.id) {
@@ -154,7 +143,14 @@ export class Blog {
       return blog;
     });
 
-    this.metaHandler.overWriteBlogMeta(blogMeta);
+    try {
+      this.metaHandler.overWriteBlogMeta(blogMeta);
+    } catch (err) {
+      console.error(`failed to overwrite blog meta: ${err}`);
+      return;
+    }
+
+    // * LOGGING
   }
 
   public deleteBlog(titleSlug: string) {

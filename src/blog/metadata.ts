@@ -44,7 +44,7 @@ export class BlogMetaHandler {
       const parsedJson = JSON.parse(buf.toString()) as BlogMeta;
       return parsedJson;
     } catch (err) {
-      throw new Error(`failed to parse blog meta: ${err}`);
+      throw err;
     }
   }
 
@@ -52,7 +52,7 @@ export class BlogMetaHandler {
     try {
       fs.writeFileSync(this.METADATA_PATH, JSON.stringify(blogMeta, null, 2));
     } catch (err) {
-      throw new Error(`failed to overwrite blog meta: ${err}`);
+      throw err;
     }
   }
 }
