@@ -79,7 +79,7 @@ export class Blog {
   ) {
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.error("blog doesn't exist");
+      Logger.error("blog doesn't exist");
       return;
     }
 
@@ -114,16 +114,19 @@ export class Blog {
 
     try {
       this.__overWriteMeta(dirPath, meta);
+      Logger.success("overwrite metadata.json");
     } catch (err) {
-      console.error(`failed to overwrite updated metadata `, err);
+      Logger.error("failed to overwrite updated metadata ", err);
       return;
     }
 
+    let newDirPath = path.join(this.blogsPath, meta.slug);
     if (isTitleUpdated) {
       try {
-        fs.renameSync(dirPath, path.join(this.blogsPath, meta.slug));
+        fs.renameSync(dirPath, newDirPath);
+        Logger.success(`renamed blog folder to '${meta.slug}'`);
       } catch (err) {
-        console.error("failed to rename the folder to updated name", err);
+        Logger.error("failed to rename folder", err);
         return;
       }
     }
@@ -133,7 +136,7 @@ export class Blog {
     try {
       blogMeta = this.metaHandler.getBlogMeta();
     } catch (err) {
-      console.error(`failed to parse blog meta: ${err}`);
+      console.error(`failed to parse METADATA.json: ${err}`);
       return;
     }
 
@@ -146,12 +149,13 @@ export class Blog {
 
     try {
       this.metaHandler.overWriteBlogMeta(blogMeta);
+      Logger.success("overwrite METADATA.json");
     } catch (err) {
-      console.error(`failed to overwrite blog meta: ${err}`);
+      Logger.error("failed to overwrite METADATA.json", err);
       return;
     }
 
-    // * LOGGING
+    Logger.success(`blog updated successfully at ${newDirPath}`);
   }
 
   public deleteBlog(titleSlug: string) {
