@@ -18,7 +18,7 @@ export class Blog {
   private METADATA_PATH: string;
   private metaHandler: BlogMetaHandler;
 
-  constructor(private blogsPath: string) {
+  constructor(private blogsPath: string, private assetsPath: string) {
     this.METADATA_PATH = path.join(blogsPath, "METADATA.json");
     this.metaHandler = new BlogMetaHandler(this.METADATA_PATH);
   }
@@ -40,18 +40,40 @@ export class Blog {
       editedAt: createdAt,
     };
 
-    const { exists, path: dirPath } = this.__checkIfBlogExists(slug);
+    const { exists: blogExists, path: dirPath } =
+      this.__checkIfBlogExists(slug);
+    const { exists: assetsExists, path: assetsPath } =
+      this.__checkIfAssetsExists(slug);
 
-    if (exists) {
+    if (blogExists) {
       Logger.warn("blog already exists");
+      return;
+    }
+
+    if (assetsExists) {
+      Logger.warn("assets already exists");
       return;
     }
 
     try {
       fs.mkdirSync(dirPath);
-      Logger.success(`folder created '${slug}'`);
+      Logger.success(`blog folder created '${slug}'`);
     } catch (err) {
-      Logger.error(`failed to create folder '${slug}'`, err);
+      Logger.error(`failed to create blog folder '${slug}'`, err);
+      return;
+    }
+
+    try {
+      fs.mkdirSync(assetsPath);
+      Logger.success(`assets folder created '${slug}'`);
+      fs.mkdirSync(path.join(assetsPath, "img"));
+      Logger.success(`image folder created '${slug}/img'`);
+      fs.mkdirSync(path.join(assetsPath, "media"));
+      Logger.success(`media folder created '${slug}/media'`);
+      fs.mkdirSync(path.join(assetsPath, "docs"));
+      Logger.success(`docs folder created '${slug}/docs'`);
+    } catch (err) {
+      Logger.error(`failed to create assets folder '${slug}'`, err);
       return;
     }
 
@@ -232,6 +254,15 @@ export class Blog {
     path: string;
   } {
     const dirPath = path.join(this.blogsPath, titleSlug);
+    const blogExists = fs.existsSync(dirPath);
+    return { exists: blogExists, path: dirPath };
+  }
+
+  public __checkIfAssetsExists(titleSlug: string): {
+    exists: boolean;
+    path: string;
+  } {
+    const dirPath = path.join(this.assetsPath, titleSlug);
     const blogExists = fs.existsSync(dirPath);
     return { exists: blogExists, path: dirPath };
   }

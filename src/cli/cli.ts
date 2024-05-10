@@ -3,10 +3,10 @@ import figlet from "figlet";
 import chalk from "chalk";
 import { Command } from "commander";
 import { Blog } from "../blog/blog.js";
-import { BLOGS_PATH } from "../utils.js";
+import { ASSETS_PATH, BLOGS_PATH } from "../utils.js";
 
 const program = new Command();
-const blog = new Blog(BLOGS_PATH);
+const blog = new Blog(BLOGS_PATH, ASSETS_PATH);
 
 program
   .version("1.0.0")
