@@ -167,7 +167,6 @@ export class Blog {
       return;
     }
 
-    // remove fom blog meta
     try {
       this.metaHandler.remove(titleSlug);
     } catch (err) {
@@ -177,30 +176,27 @@ export class Blog {
   }
 
   public compileBlog(titleSlug: string) {
-    // check if exists
     const { exists, path: dirPath } = this.__checkIfBlogExists(titleSlug);
     if (!exists) {
-      console.log("blog doesn't exist");
+      console.error("blog doesn't exist");
       return;
     }
-    // get markdown content
+
     let markDownContent: string;
     try {
       const buf = fs.readFileSync(path.join(dirPath, "markdown.md"));
       markDownContent = buf.toString();
     } catch (err) {
-      console.error(`failed to fetch markdown`, err);
+      console.error("failed to fetch markdown", err);
       return;
     }
 
-    // parse the markdown to html
-    const html = marked.parse(markDownContent) as string;
+    const htmlCode = marked.parse(markDownContent) as string;
 
-    // update parsed.html
     try {
-      fs.writeFileSync(path.join(dirPath, "parsed.html"), html);
+      fs.writeFileSync(path.join(dirPath, "parsed.html"), htmlCode);
     } catch (err) {
-      console.error("failed to write parsed markdown to html", err);
+      console.error("failed to write html code", err);
       return;
     }
   }
