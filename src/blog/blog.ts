@@ -72,6 +72,8 @@ export class Blog {
 
     this.metaHandler.add(meta);
     Logger.success(`blog created successfully at ${dirPath}`);
+
+    this.__commitToSaveChangesMsg();
   }
 
   public updateBlog(
@@ -157,6 +159,8 @@ export class Blog {
     }
 
     Logger.success(`blog updated successfully at ${newDirPath}`);
+
+    this.__commitToSaveChangesMsg();
   }
 
   public deleteBlog(titleSlug: string) {
@@ -183,6 +187,8 @@ export class Blog {
     }
 
     Logger.success(`deleted blog '${titleSlug}'`);
+
+    this.__commitToSaveChangesMsg();
   }
 
   public compileBlog(titleSlug: string) {
@@ -216,6 +222,8 @@ export class Blog {
         "parsed.html"
       )}`
     );
+
+    this.__commitToSaveChangesMsg();
   }
 
   // ! HELPER METHODS
@@ -250,8 +258,8 @@ export class Blog {
   }
 
   public __commitToSaveChangesMsg() {
-    console.log("\n");
-    console.log(chalk.bgGreenBright.white.bold("to commit changes, run: "));
+    console.log();
+    console.log(chalk.white.bold("to commit changes 💾, run: "));
     console.log(chalk.italic("  git add ."));
     console.log(chalk.italic("  git commit"));
   }
