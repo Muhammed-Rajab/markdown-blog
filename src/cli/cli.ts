@@ -19,6 +19,7 @@ program
   .option("-t, --title <title>", "specify title")
   .option("-d, --desc  <description>", "specify description")
   .option("-r, --draft [draft]", "specify draft status (true or false)")
+  .option("-v, --cover <cover>", "specify cover url of blog")
   .option("--delete-assets <assets>", "specify whether to delete the assets []")
   .parse(process.argv);
 
@@ -49,11 +50,13 @@ if (opts.create) {
   const title = opts.title;
   const desc = opts.desc;
   const draft = opts.draft;
+  const cover = opts.cover || "";
 
   blog.createBlog({
     title,
     desc,
     draft: draft === "true" ? true : false,
+    cover,
   });
 } else if (opts.update) {
   const slug = opts.slug;
@@ -67,11 +70,13 @@ if (opts.create) {
   const desc = opts.desc;
   let draft = opts.draft;
   draft = draft === undefined ? undefined : draft === "true" ? true : false;
+  const cover = opts.cover;
 
   blog.updateBlog(slug, {
     title,
     desc,
     draft,
+    cover,
   });
 } else if (opts.delete) {
   const slug = opts.slug;
