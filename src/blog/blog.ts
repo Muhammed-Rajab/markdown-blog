@@ -107,13 +107,13 @@ export class Blog {
     const { exists: assetsExists, path: assetsPath } =
       this.__checkIfAssetsExists(titleSlug);
 
-    if (blogExists) {
-      Logger.warn("blog already exists");
+    if (!blogExists) {
+      Logger.warn("blog doesn't exists");
       return;
     }
 
-    if (assetsExists) {
-      Logger.warn("assets already exists");
+    if (!assetsExists) {
+      Logger.warn("assets doesn't exists");
       return;
     }
 
@@ -203,13 +203,13 @@ export class Blog {
     const { exists: assetsExists, path: assetsPath } =
       this.__checkIfAssetsExists(titleSlug);
 
-    if (blogExists) {
-      Logger.warn("blog already exists");
+    if (!blogExists) {
+      Logger.warn("blog doesn't exists");
       return;
     }
 
-    if (assetsExists) {
-      Logger.warn("assets already exists");
+    if (!assetsExists) {
+      Logger.warn("assets doesn't exists");
       return;
     }
 

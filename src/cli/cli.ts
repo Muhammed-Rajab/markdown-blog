@@ -19,6 +19,7 @@ program
   .option("-t, --title <title>", "specify title")
   .option("-d, --desc  <description>", "specify description")
   .option("-r, --draft [draft]", "specify draft status (true or false)")
+  .option("--delete-assets <assets>", "specify whether to delete the assets []")
   .parse(process.argv);
 
 function banner() {
@@ -74,13 +75,16 @@ if (opts.create) {
   });
 } else if (opts.delete) {
   const slug = opts.slug;
+  let deleteAssets = opts.deleteAssets;
+  deleteAssets =
+    deleteAssets === undefined ? false : deleteAssets === "true" ? true : false;
 
   if (slug === undefined) {
     console.log("-s, --slug is required");
     process.exit(1);
   }
 
-  blog.deleteBlog(slug);
+  blog.deleteBlog(slug, deleteAssets);
 } else if (opts.parse) {
   const slug = opts.slug;
 
@@ -90,4 +94,6 @@ if (opts.create) {
   }
 
   blog.parseBlog(slug);
+} else {
+  console.log(opts);
 }
