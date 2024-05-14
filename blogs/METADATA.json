@@ -1,3 +1,34 @@
 {
-  "blogs": []
+  "blogs": [
+    {
+      "id": "d9d93a1f-2d64-4b07-9c55-4997574579ba",
+      "title": "Welcome to my blog",
+      "desc": "A gentle introduction to myself and what my vision is for this blog",
+      "draft": true,
+      "slug": "welcome-to-my-blog",
+      "createdAt": "2024-05-14T13:29:10.227Z",
+      "cover": "",
+      "editedAt": "2024-05-14T13:29:10.227Z"
+    },
+    {
+      "id": "5ccd7e13-7a30-43f0-95b6-e1102aace8e8",
+      "title": "Calculus for programmer",
+      "desc": "A quick leap into the basic of calculus, for programmers",
+      "draft": true,
+      "slug": "calculus-for-programmer",
+      "createdAt": "2024-05-14T13:30:04.089Z",
+      "cover": "",
+      "editedAt": "2024-05-14T13:30:04.089Z"
+    },
+    {
+      "id": "bc7bb59f-4da2-4835-a603-c6ee28442b14",
+      "title": "Linear Algebra for Programmers",
+      "desc": "A quick leap into the basics of linear algebra for programmers",
+      "draft": true,
+      "slug": "linear-algebra-for-programmers",
+      "createdAt": "2024-05-14T13:30:45.050Z",
+      "cover": "",
+      "editedAt": "2024-05-14T13:30:45.050Z"
+    }
+  ]
 }
