@@ -1,1 +1,325 @@
-<h1>Hello World</h1>
+<h1>Title Header (H1 header)</h1>
+<h3>Introduction (H3 header)</h3>
+<p>This is some placeholder text to show examples of Markdown formatting.
+We have <a href="https://github.com/do-community/do-article-templates">a full article template</a> you can use when writing a DigitalOcean article.
+Please refer to our style and formatting guidelines for more detailed explanations: <a href="https://do.co/style">https://do.co/style</a></p>
+<h2>Prerequisites (H2 header)</h2>
+<p>Before you begin this guide you&#39;ll need the following:</p>
+<ul>
+<li>Familiarity with <a href="https://daringfireball.net/projects/markdown/">Markdown</a></li>
+</ul>
+<h2>Step 1 — Basic Markdown</h2>
+<p>This is <em>italics</em>, this is <strong>bold</strong>, this is <strong>underline</strong>, and this is <del>strikethrough</del>.</p>
+<ul>
+<li>This is a list item.</li>
+<li>This list is unordered.</li>
+</ul>
+<ol>
+<li>This is a list item.</li>
+<li>This list is ordered.</li>
+</ol>
+<blockquote>
+<p>This is a quote.</p>
+<blockquote>
+<p>This is a quote inside a quote.</p>
+</blockquote>
+<ul>
+<li>This is a list in a quote.</li>
+<li>Another item in the quote list.</li>
+</ul>
+</blockquote>
+<p>Here&#39;s how to include an image with alt text and a title:</p>
+<p><img src="https://assets.digitalocean.com/logos/DO_Logo_horizontal_blue.png" alt="Alt text for screen readers" title="DigitalOcean Logo"></p>
+<p><em>We also support some extra syntax for setting the width, height and alignment of images. You can provide pixels (<code>200</code>/<code>200px</code>), or a percentage (<code>50%</code>), for the width/height. The alignment can be either <code>left</code> or <code>right</code>, with images being centered by default. These settings are all optional.</em></p>
+<p><img src="https://assets.digitalocean.com/public/mascot.png" alt="">{ width=200 height=131 align=left }</p>
+<p>Use horizontal rules to break up long sections:</p>
+<hr>
+<p>Rich transformations are also applied:</p>
+<ul>
+<li>On ellipsis: ...</li>
+<li>On quote pairs: &quot;sammy&quot;, &#39;test&#39;</li>
+<li>On dangling single quotes: it&#39;s</li>
+<li>On en/em dashes: a -- b, a --- b</li>
+</ul>
+<!-- Comments will be removed from the output -->
+
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th>are</th>
+<th>also</th>
+<th>supported</th>
+<th>and</th>
+<th>will</th>
+<th>overflow</th>
+<th>cleanly</th>
+<th>if</th>
+<th>needed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>col 1</td>
+<td>col 2</td>
+<td>col 3</td>
+<td>col 4</td>
+<td>col 5</td>
+<td>col 6</td>
+<td>col 7</td>
+<td>col 8</td>
+<td>col 9</td>
+<td>col 10</td>
+</tr>
+<tr>
+<td>col 1</td>
+<td>col 2</td>
+<td>col 3</td>
+<td>col 4</td>
+<td>col 5</td>
+<td>col 6</td>
+<td>col 7</td>
+<td>col 8</td>
+<td>col 9</td>
+<td>col 10</td>
+</tr>
+<tr>
+<td>col 1</td>
+<td>col 2</td>
+<td>col 3</td>
+<td>col 4</td>
+<td>col 5</td>
+<td>col 6</td>
+<td>col 7</td>
+<td>col 8</td>
+<td>col 9</td>
+<td>col 10</td>
+</tr>
+<tr>
+<td>col 1</td>
+<td>col 2</td>
+<td>col 3</td>
+<td>col 4</td>
+<td>col 5</td>
+<td>col 6</td>
+<td>col 7</td>
+<td>col 8</td>
+<td>col 9</td>
+<td>col 10</td>
+</tr>
+<tr>
+<td>col 1</td>
+<td>col 2</td>
+<td>col 3</td>
+<td>col 4</td>
+<td>col 5</td>
+<td>col 6</td>
+<td>col 7</td>
+<td>col 8</td>
+<td>col 9</td>
+<td>col 10</td>
+</tr>
+</tbody></table>
+<h2>Step 2 — Code</h2>
+<p>This is <code>inline code</code>. This is a &lt;^&gt;variable&lt;^&gt;. This is an <code>in-line code &lt;^&gt;variable&lt;^&gt;</code>. You can also have <a href="https://www.digitalocean.com"><code>code</code> in links</a>.</p>
+<p>Here&#39;s a configuration file with a label:</p>
+<pre><code class="language-nginx">[label /etc/nginx/sites-available/default]
+server {
+    listen 80 &lt;^&gt;default_server&lt;^&gt;;
+    . . .
+}
+</code></pre>
+<p>Examples can have line numbers, and every code block has a &#39;Copy&#39; button to copy just the code:</p>
+<pre><code class="language-line_numbers,js">const test = &#39;hello&#39;;
+const other = &#39;world&#39;;
+console.log(test, other);
+</code></pre>
+<p>Here&#39;s output from a command with a secondary label:</p>
+<pre><code>[secondary_label Output]
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+</code></pre>
+<p>This is a non-root user command example:</p>
+<pre><code class="language-command">sudo apt-get update
+sudo apt-get install python3
+</code></pre>
+<p>This is a root command example:</p>
+<pre><code class="language-super_user">adduser sammy
+shutdown
+</code></pre>
+<p>This is a custom prefix command example:</p>
+<pre><code class="language-custom_prefix(mysql&gt;)">FLUSH PRIVILEGES;
+SELECT * FROM articles;
+</code></pre>
+<p>A custom prefix can contain a space by using <code>\s</code>:</p>
+<pre><code class="language-custom_prefix((my-server)\smysql&gt;)">FLUSH PRIVILEGES;
+SELECT * FROM articles;
+</code></pre>
+<p>Indicate where commands are being run with environments:</p>
+<pre><code class="language-command">[environment local]
+ssh root@server_ip
+</code></pre>
+<pre><code class="language-command">[environment second]
+echo &quot;Secondary server&quot;
+</code></pre>
+<pre><code class="language-command">[environment third]
+echo &quot;Tertiary server&quot;
+</code></pre>
+<pre><code class="language-command">[environment fourth]
+echo &quot;Quaternary server&quot;
+</code></pre>
+<pre><code class="language-command">[environment fifth]
+echo &quot;Quinary server&quot;
+</code></pre>
+<p>And all of these can be combined together, with a language for syntax highlighting as well as a line prefix (line numbers, command, custom prefix, etc.), and even an environment and label:</p>
+<pre><code class="language-line_numbers,html">[environment second]
+[label index.html]
+&lt;html&gt;
+&lt;body&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;^&gt;My Title&lt;^&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  . . .
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>Step 3 — Callouts</h2>
+<p>Here is a note, a warning, some info and a draft note:</p>
+<p>&lt;$&gt;[note]
+<strong>Note:</strong> Use this for notes on a publication.
+&lt;$&gt;</p>
+<p>&lt;$&gt;[warning]
+<strong>Warning:</strong> Use this to warn users.
+&lt;$&gt;</p>
+<p>&lt;$&gt;[info]
+<strong>Info:</strong> Use this for product information.
+&lt;$&gt;</p>
+<p>&lt;$&gt;[draft]
+<strong>Draft:</strong> Use this for notes in a draft publication.
+&lt;$&gt;</p>
+<p>A callout can also be given a label, which supports inline markdown as well:</p>
+<p>&lt;$&gt;[note]
+[label Labels support <em>inline</em> <strong>markdown</strong>]
+<strong>Note:</strong> Use this for notes on a publication.
+&lt;$&gt;</p>
+<p>You can also mention users by username:</p>
+<p>@MattIPv4</p>
+<h2>Step 4 — Layout</h2>
+<p>Columns allow you to customise the layout of your Markdown:</p>
+<p>[column
+Content inside a column is regular Markdown block content.</p>
+<blockquote>
+<p>Any block or inline syntax can be used, including quotes.
+]</p>
+</blockquote>
+<p>[column
+Two or more columns adjacent to each other are needed to create a column layout.</p>
+<p>On desktop the columns will be evenly distributed in a single row, on tablets they will wrap naturally, and on mobile they will be in a single stack.
+]</p>
+<p>[details Content can be hidden using <code>details</code>.
+Inside the details block you can use any block or inline syntax.</p>
+<p>You could hide the solution to a problem:</p>
+<pre><code class="language-js">// Write a message to console
+console.log(&quot;Hello, world!&quot;);
+</code></pre>
+<p>]</p>
+<p>[details open You can also have the details block open by default.
+Pass <code>open</code> as the first argument to the summary section to do this.</p>
+<p><em>You can also pass <code>closed</code>, though this is the same as not passing anything before the summary.</em>
+]</p>
+<h2>Step 5 — Embeds</h2>
+<h3>YouTube</h3>
+<p>Embedding a YouTube video (id, height, width):</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CGIEjak1xfs?si=E1w2KWZjgQCWd-tI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p><em>Both the width and height are optional, with the defaults being 480 and 270 respectively.</em><br><em>The width/height set are treated as maximums -- the video will scale down to fit the available space, maintaining the aspect ratio.</em></p>
+<h3>Wistia</h3>
+<p>Embedding a Wistia video (id, height, width):</p>
+<p>[wistia 7ld71zbvi6 225 400]</p>
+<p><em>As with the YouTube embed, both the width and height are optional and have the same defaults.</em><br><em>The same behaviour applies to the width/height set, with responsive scaling.</em></p>
+<h3>Vimeo</h3>
+<p>Embedding a Vimeo video (url, height, width):</p>
+<p>[vimeo <a href="https://player.vimeo.com/video/329272793">https://player.vimeo.com/video/329272793</a> 225 400]</p>
+<p><em>As with the YouTube embed, both the width and height are optional and have the same defaults.</em><br><em>The same behaviour applies to the width/height set, with responsive scaling.</em></p>
+<h3>DNS</h3>
+<p>Embedding DNS record lookups (hostname, record types...):</p>
+<p>[dns digitalocean.com A AAAA]</p>
+<h3>Glob</h3>
+<p>Demonstrating how glob matching works (pattern, tests...):</p>
+<p>[glob **/*.js a/b.js c/d.js e.jsx f.md]</p>
+<p>Glob embeds can also be written as multiple lines if needed:</p>
+<p>[glob **/*.js
+a/b.js
+c/d.js
+e.jsx
+f.md]</p>
+<h3>CodePen</h3>
+<p>To provide code examples, you could embed a CodePen with a username and pen ID:</p>
+<p>[codepen MattCowley vwPzeX]</p>
+<p>CodePen embeds can be customized with many flags after the username and ID:</p>
+<ul>
+<li>Pass any integer value to set a custom height for the embed (e.g. <code>[codepen MattCowley vwPzeX 512]</code>)</li>
+<li>Pass <code>dark</code> to switch the embed to using dark mode (e.g. <code>[codepen MattCowley vwPzeX dark]</code>)</li>
+<li>Pass <code>lazy</code> to enable lazy loading (click to run) for the embed (e.g. <code>[codepen MattCowley vwPzeX lazy]</code>)</li>
+<li>Pass one of <code>html</code>, <code>css</code>, or <code>js</code> to change the default tab that is shown (e.g. <code>[codepen MattCowley vwPzeX css]</code>)</li>
+<li>Pass <code>result</code> to show the result of the pen. This is the default tab, but can be combined with other tabs as well (e.g. <code>[codepen MattCowley vwPzeX html result]</code>)</li>
+<li>Pass <code>editable</code> to enable the user to edit the embed (e.g. <code>[codepen chriscoyier Yxzjdz editable]</code>)<br><em>(Note: The embedded pen must be from a user with CodePen Pro for this to work)</em></li>
+</ul>
+<p>These flags can be combined in any order to create a custom CodePen embed.
+For example, <code>[codepen MattCowley vwPzeX dark css 384]</code> would create a dark mode embed that shows the CSS tab by default, with a height of 384px.</p>
+<h3>Glitch</h3>
+<p>Alternatively, you may want to embed a code example from Glitch with a project slug:</p>
+<p>[glitch hello-digitalocean]</p>
+<p>Similar to CodePen embeds, a set of optional flags can be passed as the slug to customize the embed:</p>
+<ul>
+<li>Pass any integer value to set a custom height for the embed (e.g. <code>[glitch hello-digitalocean 512]</code>)</li>
+<li>Pass <code>code</code> to show the project code by default in the embed (e.g. <code>[glitch hello-digitalocean code]</code>)</li>
+<li>Pass <code>notree</code> to hide the file tree by default when showing the project code (e.g. <code>[glitch hello-digitalocean code notree]</code>)</li>
+<li>Pass <code>path=...</code> to set a default file to show when showing the project code (e.g. <code>[glitch hello-digitalocean code path=src/app.jsx]</code>)</li>
+<li>Pass <code>highlights=...</code> to set lines to highlight when showing the project code (e.g. <code>[glitch hello-digitalocean code path=src/app.jsx highlights=15,25]</code>)</li>
+<li>Pass <code>noattr</code> to remove the author attribution from the embed (e.g. <code>[glitch hello-digitalocean noattr]</code>)</li>
+</ul>
+<h3>Can I Use</h3>
+<p>If you&#39;re writing web-related content, you may want to embed a Can I Use table for a feature:</p>
+<p>[caniuse css-grid]</p>
+<p>Some optional flags can also be set for this embed:</p>
+<ul>
+<li>Pass <code>past=...</code> to set how many previous browser versions are listed (0-5) (e.g. <code>[caniuse css-grid past=5]</code>)</li>
+<li>Pass <code>future=...</code> to set how many future browser versions are listed (0-3) (e.g. <code>[caniuse css-grid future=3]</code>)</li>
+<li>Pass <code>accessible</code> to switch to the accessible color scheme by default (e.g. <code>[caniuse css-grid accessible]</code>)</li>
+</ul>
+<h3>Asciinema</h3>
+<p>Embedding a terminal recording from Asciinema (id, cols, rows):</p>
+<p>[asciinema 239367 50 20]</p>
+<h3>Twitter</h3>
+<p>You can also embed a tweet from Twitter by passing the URL for the tweet:</p>
+<p>[twitter <a href="https://twitter.com/MattIPv4/status/1576415168426573825%5D">https://twitter.com/MattIPv4/status/1576415168426573825]</a></p>
+<p>Like a few other embeds, you can also pass optional flags to customize the embed:</p>
+<ul>
+<li>Pass any integer value (between 250 and 550) to set a custom width for the embed (e.g. <code>[twitter https://twitter.com/MattIPv4/status/1576415168426573825 400]</code>)</li>
+<li>Pass <code>light</code> or <code>dark</code> to switch the theme of the embed (e.g. <code>[twitter https://twitter.com/MattIPv4/status/1576415168426573825 dark]</code>)</li>
+<li>Pass <code>left</code>, <code>center</code>, or <code>right</code> to align the embed (e.g. <code>[twitter https://twitter.com/MattIPv4/status/1576415168426573825 left]</code>)</li>
+</ul>
+<h3>Instagram</h3>
+<p>You can also embed a post from Instagram by passing the URL for the post:</p>
+<p>[instagram <a href="https://www.instagram.com/p/CkQuv3_LRgS%5D">https://www.instagram.com/p/CkQuv3_LRgS]</a></p>
+<p>Like a few other embeds, you can also pass optional flags to customize the embed:</p>
+<ul>
+<li>Pass any integer value (between 326 and 550) to set a custom width for the embed (e.g. <code>[instagram https://www.instagram.com/p/CkQuv3_LRgS 400]</code>)</li>
+<li>Add <code>left</code>, <code>center</code>, or <code>right</code> to set the alignment of the embed (default is <code>left</code>).</li>
+<li>Pass <code>caption</code> to include caption under the post (e.g. <code>[instagram https://www.instagram.com/p/CkQuv3_LRgS caption]</code>)</li>
+</ul>
+<h3>Slideshow</h3>
+<p>You can also embed Slideshow (url1, url2, ...urls, height, width):</p>
+<p>[slideshow <a href="https://assets.digitalocean.com/banners/python.png">https://assets.digitalocean.com/banners/python.png</a> <a href="https://assets.digitalocean.com/banners/javascript.png">https://assets.digitalocean.com/banners/javascript.png</a> <a href="https://assets.digitalocean.com/banners/nodejs.png%5D">https://assets.digitalocean.com/banners/nodejs.png]</a></p>
+<p><em>Both the width and height are optional, with the defaults being 480 and 270 respectively.</em></p>
+<h3>Image compare</h3>
+<p>Compare two images side by side (url1, url2, height, width):</p>
+<p>[compare <a href="https://assets.digitalocean.com/banners/python.png">https://assets.digitalocean.com/banners/python.png</a> <a href="https://assets.digitalocean.com/banners/javascript.png%5D">https://assets.digitalocean.com/banners/javascript.png]</a></p>
+<p><em>Both the width and height are optional, with the defaults being 480 and 270 respectively.</em></p>
+<h2>Step 6 — Tutorials</h2>
+<p>Certain features of our Markdown engine are designed specifically for our tutorial content-types.
+These may not be enabled in all contexts in the DigitalOcean community, but are enabled by default in the do-markdownit plugin.</p>
+<p>[rsvp_button 1234 &quot;Marketo RSVP buttons use the <code>rsvp_button</code> flag&quot;]</p>
+<p>[terminal ubuntu:focal Terminal buttons are behind the <code>terminal</code> flag]</p>
+<h2>Conclusion</h2>
+<p>Please refer to our <a href="https://do.co/style">writing guidelines</a> for more detailed explanations on our style and formatting.</p>
