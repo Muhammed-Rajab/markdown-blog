@@ -50,14 +50,6 @@ Rich transformations are also applied:
 
 <!-- Comments will be removed from the output -->
 
-| Tables | are   | also  | supported | and   | will  | overflow | cleanly | if    | needed |
-| ------ | ----- | ----- | --------- | ----- | ----- | -------- | ------- | ----- | ------ |
-| col 1  | col 2 | col 3 | col 4     | col 5 | col 6 | col 7    | col 8   | col 9 | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5 | col 6 | col 7    | col 8   | col 9 | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5 | col 6 | col 7    | col 8   | col 9 | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5 | col 6 | col 7    | col 8   | col 9 | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5 | col 6 | col 7    | col 8   | col 9 | col 10 |
-
 ## Step 2 — Code
 
 This is `inline code`. This is a <^>variable<^>. This is an `in-line code <^>variable<^>`. You can also have [`code` in links](https://www.digitalocean.com).
