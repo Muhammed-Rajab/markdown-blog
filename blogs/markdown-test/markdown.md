@@ -244,6 +244,12 @@ Embedding a Vimeo video (url, height, width):
 _As with the YouTube embed, both the width and height are optional and have the same defaults._\
 _The same behaviour applies to the width/height set, with responsive scaling._
 
+<iframe height="300" style="width: 100%;" scrolling="no" title="No text duplication slice &amp; offset (SVG filter magic 🪄)" src="https://codepen.io/thebabydino/embed/RwmPZVR?default-tab=html%2Cresult&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/thebabydino/pen/RwmPZVR">
+  No text duplication slice &amp; offset (SVG filter magic 🪄)</a> by Ana Tudor (<a href="https://codepen.io/thebabydino">@thebabydino</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
 ### DNS
 
 Embedding DNS record lookups (hostname, record types...):
@@ -251,6 +257,13 @@ Embedding DNS record lookups (hostname, record types...):
 [dns digitalocean.com A AAAA]
 
 ### Glob
+
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="RwmPZVR" data-user="thebabydino" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/thebabydino/pen/RwmPZVR">
+  No text duplication slice &amp; offset (SVG filter magic 🪄)</a> by Ana Tudor (<a href="https://codepen.io/thebabydino">@thebabydino</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
 Demonstrating how glob matching works (pattern, tests...):
 
