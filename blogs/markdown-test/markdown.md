@@ -56,14 +56,6 @@ This is `inline code`. This is a <^>variable<^>. This is an `in-line code <^>var
 
 Here's a configuration file with a label:
 
-```nginx
-[label /etc/nginx/sites-available/default]
-server {
-    listen 80 <^>default_server<^>;
-    . . .
-}
-```
-
 Examples can have line numbers, and every code block has a 'Copy' button to copy just the code:
 
 ```line_numbers,js
@@ -73,11 +65,6 @@ console.log(test, other);
 ```
 
 Here's output from a command with a secondary label:
-
-```
-[secondary_label Output]
-Could not connect to Redis at 127.0.0.1:6379: Connection refused
-```
 
 This is a non-root user command example:
 
@@ -265,109 +252,11 @@ Embedding DNS record lookups (hostname, record types...):
 </p>
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
-Demonstrating how glob matching works (pattern, tests...):
-
-[glob **/*.js a/b.js c/d.js e.jsx f.md]
-
-Glob embeds can also be written as multiple lines if needed:
-
-[glob **/*.js
-a/b.js
-c/d.js
-e.jsx
-f.md]
-
-### CodePen
-
-To provide code examples, you could embed a CodePen with a username and pen ID:
-
-[codepen MattCowley vwPzeX]
-
-CodePen embeds can be customized with many flags after the username and ID:
-
-- Pass any integer value to set a custom height for the embed (e.g. `[codepen MattCowley vwPzeX 512]`)
-- Pass `dark` to switch the embed to using dark mode (e.g. `[codepen MattCowley vwPzeX dark]`)
-- Pass `lazy` to enable lazy loading (click to run) for the embed (e.g. `[codepen MattCowley vwPzeX lazy]`)
-- Pass one of `html`, `css`, or `js` to change the default tab that is shown (e.g. `[codepen MattCowley vwPzeX css]`)
-- Pass `result` to show the result of the pen. This is the default tab, but can be combined with other tabs as well (e.g. `[codepen MattCowley vwPzeX html result]`)
-- Pass `editable` to enable the user to edit the embed (e.g. `[codepen chriscoyier Yxzjdz editable]`)\
-  _(Note: The embedded pen must be from a user with CodePen Pro for this to work)_
-
-These flags can be combined in any order to create a custom CodePen embed.
-For example, `[codepen MattCowley vwPzeX dark css 384]` would create a dark mode embed that shows the CSS tab by default, with a height of 384px.
-
-### Glitch
-
-Alternatively, you may want to embed a code example from Glitch with a project slug:
-
-[glitch hello-digitalocean]
-
-Similar to CodePen embeds, a set of optional flags can be passed as the slug to customize the embed:
-
-- Pass any integer value to set a custom height for the embed (e.g. `[glitch hello-digitalocean 512]`)
-- Pass `code` to show the project code by default in the embed (e.g. `[glitch hello-digitalocean code]`)
-- Pass `notree` to hide the file tree by default when showing the project code (e.g. `[glitch hello-digitalocean code notree]`)
-- Pass `path=...` to set a default file to show when showing the project code (e.g. `[glitch hello-digitalocean code path=src/app.jsx]`)
-- Pass `highlights=...` to set lines to highlight when showing the project code (e.g. `[glitch hello-digitalocean code path=src/app.jsx highlights=15,25]`)
-- Pass `noattr` to remove the author attribution from the embed (e.g. `[glitch hello-digitalocean noattr]`)
-
-### Can I Use
-
-If you're writing web-related content, you may want to embed a Can I Use table for a feature:
-
-[caniuse css-grid]
-
-Some optional flags can also be set for this embed:
-
-- Pass `past=...` to set how many previous browser versions are listed (0-5) (e.g. `[caniuse css-grid past=5]`)
-- Pass `future=...` to set how many future browser versions are listed (0-3) (e.g. `[caniuse css-grid future=3]`)
-- Pass `accessible` to switch to the accessible color scheme by default (e.g. `[caniuse css-grid accessible]`)
-
-### Asciinema
-
-Embedding a terminal recording from Asciinema (id, cols, rows):
-
-[asciinema 239367 50 20]
-
 ### Twitter
 
 You can also embed a tweet from Twitter by passing the URL for the tweet:
 
-[twitter https://twitter.com/MattIPv4/status/1576415168426573825]
-
 Like a few other embeds, you can also pass optional flags to customize the embed:
-
-- Pass any integer value (between 250 and 550) to set a custom width for the embed (e.g. `[twitter https://twitter.com/MattIPv4/status/1576415168426573825 400]`)
-- Pass `light` or `dark` to switch the theme of the embed (e.g. `[twitter https://twitter.com/MattIPv4/status/1576415168426573825 dark]`)
-- Pass `left`, `center`, or `right` to align the embed (e.g. `[twitter https://twitter.com/MattIPv4/status/1576415168426573825 left]`)
-
-### Instagram
-
-You can also embed a post from Instagram by passing the URL for the post:
-
-[instagram https://www.instagram.com/p/CkQuv3_LRgS]
-
-Like a few other embeds, you can also pass optional flags to customize the embed:
-
-- Pass any integer value (between 326 and 550) to set a custom width for the embed (e.g. `[instagram https://www.instagram.com/p/CkQuv3_LRgS 400]`)
-- Add `left`, `center`, or `right` to set the alignment of the embed (default is `left`).
-- Pass `caption` to include caption under the post (e.g. `[instagram https://www.instagram.com/p/CkQuv3_LRgS caption]`)
-
-### Slideshow
-
-You can also embed Slideshow (url1, url2, ...urls, height, width):
-
-[slideshow https://assets.digitalocean.com/banners/python.png https://assets.digitalocean.com/banners/javascript.png https://assets.digitalocean.com/banners/nodejs.png]
-
-_Both the width and height are optional, with the defaults being 480 and 270 respectively._
-
-### Image compare
-
-Compare two images side by side (url1, url2, height, width):
-
-[compare https://assets.digitalocean.com/banners/python.png https://assets.digitalocean.com/banners/javascript.png]
-
-_Both the width and height are optional, with the defaults being 480 and 270 respectively._
 
 ## Step 6 — Tutorials
 
