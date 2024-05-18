@@ -6,6 +6,7 @@ export type Metadata = {
   slug: string;
   createdAt: Date;
   editedAt: Date;
+  tags?: string;
   draft: boolean;
 };
 export type BlogMeta = {
@@ -17,10 +18,12 @@ export type CreateBlogOptions = {
   desc: string;
   draft: boolean;
   cover?: string;
+  tags?: string;
 };
 export type UpdateBlogOptions = {
   title?: string;
   desc?: string;
   draft?: boolean;
   cover?: string;
+  tags?: string;
 };
