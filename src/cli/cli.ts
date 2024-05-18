@@ -17,6 +17,7 @@ program
   .option("-p, --parse", "to parse markdown to html")
   .option("-s, --slug  <slug>", "title slug of the blog")
   .option("-t, --title <title>", "specify title")
+  .option("-g, --tags <tags>", "specify tags")
   .option("-d, --desc  <description>", "specify description")
   .option("-r, --draft [draft]", "specify draft status (true or false)")
   .option("-v, --cover <cover>", "specify cover url of blog")
@@ -51,12 +52,14 @@ if (opts.create) {
   const desc = opts.desc;
   const draft = opts.draft;
   const cover = opts.cover || "";
+  const tags = opts.tags || "";
 
   blog.createBlog({
     title,
     desc,
     draft: draft === "true" ? true : false,
     cover,
+    tags,
   });
 } else if (opts.update) {
   const slug = opts.slug;
@@ -71,12 +74,14 @@ if (opts.create) {
   let draft = opts.draft;
   draft = draft === undefined ? undefined : draft === "true" ? true : false;
   const cover = opts.cover;
+  const tags = opts.tags;
 
   blog.updateBlog(slug, {
     title,
     desc,
     draft,
     cover,
+    tags,
   });
 } else if (opts.delete) {
   const slug = opts.slug;
